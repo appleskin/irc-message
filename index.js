@@ -158,7 +158,8 @@ var createStream = function(options) {
                     parsed.prefix = parsePrefix(parsed.prefix)
                 }
             } else {
-                this.emit('error', new Error('Invalid IRC message'))
+                continue; //skip it
+                // this.emit('error', new Error('Invalid IRC message'))
             }
 
             this.push(parsed)

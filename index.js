@@ -145,19 +145,19 @@ var createStream = function(options) {
             var parsed = parse(message)
 
             // support for IRCv3.2 server-time spec
-            var timestamp = parsed.tags.time
+            if( parsed !== null ) {
+                var timestamp = parsed.tags.time
 
-            if (timestamp && convertTimestamps) {
-                var converted = iso8601.toDate(timestamp)
-                parsed.tags.time = (converted) ? converted : new Date(NaN)
-            }
+                if (timestamp && convertTimestamps) {
+                    var converted = iso8601.toDate(timestamp)
+                    parsed.tags.time = (converted) ? converted : new Date(NaN)
+                }
 
-            //
-            if (shouldParsePrefix) {
-                parsed.prefix = parsePrefix(parsed.prefix)
-            }
-
-            if (parsed === null) {
+                //
+                if (shouldParsePrefix) {
+                    parsed.prefix = parsePrefix(parsed.prefix)
+                }
+            } else {
                 this.emit('error', new Error('Invalid IRC message'))
             }
 
